@@ -1,0 +1,442 @@
+---
+title: "KIRC - KIRP - KICH analysis on AXL, MET and SRC"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r loadLibraries}
+library(TCGAplot)
+```
+
+
+# AXL, MET and SRC expression across PanCancer
+```{r Expressions}
+gene1 <- 'AXL'
+gene2 <- 'MET'
+gene3 <- 'SRC'
+pan_boxplot(gene1,palette="jco",legend="right",method="wilcox.test")
+pan_boxplot(gene2,palette="jco",legend="right",method="wilcox.test")
+pan_boxplot(gene3,palette="jco",legend="right",method="wilcox.test")
+```
+## paired boxplot
+
+```{r Expressions2}
+
+pan_paired_boxplot(gene1,palette="jco",legend="right",method="wilcox.test")
+pan_paired_boxplot(gene2,palette="jco",legend="right",method="wilcox.test")
+pan_paired_boxplot(gene3,palette="jco",legend="right",method="wilcox.test")
+
+```
+
+```{r Expressions_ccRCC}
+gene1 <- 'AXL'
+gene2 <- 'MET'
+gene3 <- 'SRC'
+
+# AXL
+axl_kirc_exp <- paired_boxplot('KIRC',gene1, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+axl_kirp_exp <- paired_boxplot('KIRP',gene1, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+axl_kich_exp <- paired_boxplot('KICH',gene1, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+
+# MET
+met_kirc_exp <- paired_boxplot('KIRC',gene2, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+met_kirp_exp <- paired_boxplot('KIRP',gene2, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+met_kich_exp <- paired_boxplot('KICH',gene2, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+
+# SRC
+src_kirc_exp <- paired_boxplot('KIRC',gene3, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+src_kirp_exp <- paired_boxplot('KIRP',gene3, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+src_kich_exp <- paired_boxplot('KICH',gene3, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+
+# save Files -  AXL
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/axl_kirc_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(axl_kirc_exp)
+dev.off()
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/axl_kirp_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(axl_kirp_exp)
+dev.off()
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/axl_kich_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(axl_kich_exp)
+dev.off()
+
+# save Files - MET
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/met_kirc_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(met_kirc_exp)
+dev.off()
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/met_kirp_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(met_kirp_exp)
+dev.off()
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/met_kich_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(met_kich_exp)
+dev.off()
+
+
+# save Files - SRC
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_kirc_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(src_kirc_exp)
+dev.off()
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_kirp_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(src_kirp_exp)
+dev.off()
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_kich_exp.png", width = 8 * 300, height = 8 * 300, res = 300, bg = "transparent")
+print(src_kich_exp)
+dev.off()
+```
+
+
+## tumor mutational burden of a gene across cancers
+```{r TMBRadar}
+gene_TMB_radar(gene1)
+gene_TMB_radar(gene2)
+gene_TMB_radar(gene3)
+
+ggsave('/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/axl_tmb.png', plot = gene_TMB_radar(gene1), bg = "transparent", width = 7, height = 7)
+ggsave('/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/met_tmb.png', plot = gene_TMB_radar(gene2), bg = "transparent", width = 7, height = 7)
+ggsave('/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_tmb.png', plot = gene_TMB_radar(gene3), bg = "transparent", width = 7, height = 7)
+```
+
+
+```{r StageExpression}
+cancer1 <- 'KIRC'
+cancer2 <- 'KIRP' 
+cancer3 <- 'KICH'
+
+gene_stage(cancer1,gene1,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer1,gene2,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer1,gene3,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+
+
+gene_stage(cancer2,gene1,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer2,gene2,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer2,gene3,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+
+
+gene_stage(cancer3,gene1,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer3,gene2,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer3,gene3,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+
+
+ggsave('/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_stage.png', plot = gene_stage(cancer1,gene3,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test"), bg = "transparent", width = 7, height = 7)
+```
+
+```{r AXLgrouped}
+gene_deg_heatmap(cancer1, gene1,top_n=20)
+```
+
+maybe not so important 
+## Age
+```{r ageData}
+gene_3age("KIRC","AXL", age1=40, age2=60)
+gene_3age("KIRC","MET", age1=40, age2=60)
+gene_3age("KIRC","SRC", age1=40, age2=60)
+
+gene_3age("KIRP","AXL", age1=40, age2=60)
+gene_3age("KIRP","MET", age1=40, age2=60)
+gene_3age("KIRP","SRC", age1=40, age2=60)
+
+gene_3age("KICH","AXL", age1=40, age2=60)
+gene_3age("KICH","MET", age1=40, age2=60)
+gene_3age("KICH","SRC", age1=40, age2=60)
+```
+
+```{r Correlations}
+gene_gene_scatter(cancer1,gene1,gene2,density="F")
+gene_gene_scatter(cancer1,gene1,gene3,density="F")
+gene_gene_scatter(cancer1,gene2,gene3,density="F")
+
+
+gene_gene_scatter(cancer2,gene1,gene2,density="F")
+gene_gene_scatter(cancer2,gene1,gene3,density="F")
+gene_gene_scatter(cancer2,gene2,gene3,density="F")
+
+
+gene_gene_scatter(cancer3,gene1,gene2,density="F")
+gene_gene_scatter(cancer3,gene1,gene3,density="F")
+gene_gene_scatter(cancer3,gene2,gene3,density="F")
+```
+
+```{r tcga_roc}
+tcga_roc(cancer1,gene1)
+tcga_roc(cancer1,gene2)
+tcga_roc(cancer1,gene3)
+
+tcga_roc(cancer2,gene1)
+tcga_roc(cancer2,gene2)
+tcga_roc(cancer2,gene3)
+
+tcga_roc(cancer3,gene1)
+tcga_roc(cancer3,gene2)
+tcga_roc(cancer3,gene3)
+```
+
+# Survival Analysis
+```{r survival}
+tcga_kmplot(cancer1,gene1,palette='jco')
+tcga_kmplot(cancer1,gene2,palette='jco')
+tcga_kmplot(cancer1,gene3,palette='jco')
+
+
+tcga_kmplot(cancer2,gene1,palette='jco')
+tcga_kmplot(cancer2,gene2,palette='jco')
+tcga_kmplot(cancer2,gene3,palette='jco')
+
+
+tcga_kmplot(cancer3,gene1,palette='jco')
+tcga_kmplot(cancer3,gene2,palette='jco')
+tcga_kmplot(cancer3,gene3,palette='jco')
+```
+
+
+## Mutation Data of AXL, MET and SRC 
+```{r downloadMutationData}
+# KIRC
+library(TCGAbiolinks)
+query_kirc <- GDCquery(
+  project = c("TCGA-KIRC"), 
+  data.category = "Simple Nucleotide Variation", 
+  access = "open",
+  data.type = "Masked Somatic Mutation", 
+  workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking"
+)
+GDCdownload(query_kirc)
+maf_kirc <- GDCprepare(query_kirc)
+save(maf_kirc,file = "maf_kirc.rda",compress = "xz")
+
+
+# KIRP
+query_kirp <- GDCquery(
+  project = c("TCGA-KIRP"), 
+  data.category = "Simple Nucleotide Variation", 
+  access = "open",
+  data.type = "Masked Somatic Mutation", 
+  workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking"
+)
+GDCdownload(query_kirp)
+maf_kirp <- GDCprepare(query_kirp)
+save(maf_kirp,file = "maf_kirp.rda",compress = "xz")
+
+
+# KICH
+query_kich <- GDCquery(
+  project = c("TCGA-KICH"), 
+  data.category = "Simple Nucleotide Variation", 
+  access = "open",
+  data.type = "Masked Somatic Mutation", 
+  workflow.type = "Aliquot Ensemble Somatic Variant Merging and Masking"
+)
+GDCdownload(query_kich)
+maf_kich <- GDCprepare(query_kich)
+save(maf_kich,file = "maf_kich.rda",compress = "xz")
+```
+
+
+
+# analyze Mutation data
+```{r plotMafFiles}
+library(maftools)
+
+# maftool tutorial: https://www.bioconductor.org/packages/release/workflows/vignettes/TCGAWorkflow/inst/doc/TCGAWorkflow.html#Genomic_analysis
+## add clinical data
+# To prepare for maftools we will also include clinical data
+# For a mutant vs WT survival analysis 
+# get indexed clinical patient data for GBM samples
+kirc_clin <- GDCquery_clinic(project = "TCGA-KIRC", type = "Clinical")
+kirp_clin <- GDCquery_clinic(project = "TCGA-KIRP", type = "Clinical")
+kich_clin <- GDCquery_clinic(project = "TCGA-KICH", type = "Clinical")
+
+colnames(kirc_clin)[grep("submitter_id",colnames(kirc_clin))] <- "Tumor_Sample_Barcode"
+colnames(kirp_clin)[grep("submitter_id",colnames(kirp_clin))] <- "Tumor_Sample_Barcode"
+colnames(kich_clin)[grep("submitter_id",colnames(kich_clin))] <- "Tumor_Sample_Barcode"
+
+
+# we need to create a binary variable 1 is dead 0 is not dead
+plyr::count(kirc_clin$vital_status)
+kirc_clin$Overall_Survival_Status <- 1 # dead
+kirc_clin$Overall_Survival_Status[which(kirc_clin$vital_status != "Dead")] <- 0
+
+# If patient is not dead we don't have days_to_death (NA)
+# we will set it as the last day we know the patient is still alive
+kirc_clin$time <- kirc_clin$days_to_death
+kirc_clin$time[is.na(kirc_clin$days_to_death)] <- kirc_clin$days_to_last_follow_up[is.na(kirc_clin$days_to_death)]
+
+
+# kirp clinical
+
+# we need to create a binary variable 1 is dead 0 is not dead
+plyr::count(kirp_clin$vital_status)
+kirp_clin$Overall_Survival_Status <- 1 # dead
+kirp_clin$Overall_Survival_Status[which(kirp_clin$vital_status != "Dead")] <- 0
+
+# If patient is not dead we don't have days_to_death (NA)
+# we will set it as the last day we know the patient is still alive
+kirp_clin$time <- kirp_clin$days_to_death
+kirp_clin$time[is.na(kirp_clin$days_to_death)] <- kirp_clin$days_to_last_follow_up[is.na(kirp_clin$days_to_death)]
+
+
+# kich clinical
+# we need to create a binary variable 1 is dead 0 is not dead
+plyr::count(kich_clin$vital_status)
+kich_clin$Overall_Survival_Status <- 1 # dead
+kich_clin$Overall_Survival_Status[which(kich_clin$vital_status != "Dead")] <- 0
+
+# If patient is not dead we don't have days_to_death (NA)
+# we will set it as the last day we know the patient is still alive
+kich_clin$time <- kich_clin$days_to_death
+kich_clin$time[is.na(kich_clin$days_to_death)] <- kich_clin$days_to_last_follow_up[is.na(kich_clin$days_to_death)]
+
+
+# Create object to use in maftools
+maf_kirc <- read.maf(
+  maf = maf_kirc, 
+  clinicalData = kirc_clin, 
+  isTCGA = TRUE
+)
+
+maf_kirp <- read.maf(
+  maf = maf_kirp, 
+  clinicalData = kirp_clin, 
+  isTCGA = TRUE
+)
+
+
+maf_kich <- read.maf(
+  maf = maf_kich, 
+  clinicalData = kich_clin, 
+  isTCGA = TRUE
+)
+
+plotmafSummary(
+  maf = maf_kirc,
+  rmOutlier = TRUE,
+  addStat = 'median',
+  dashboard = TRUE
+)
+
+plotmafSummary(
+  maf = maf_kirp,
+  rmOutlier = TRUE,
+  addStat = 'median',
+  dashboard = TRUE
+)
+
+plotmafSummary(
+  maf = maf_kich,
+  rmOutlier = TRUE,
+  addStat = 'median',
+  dashboard = TRUE
+)
+```
+
+
+```{r mutationEffectOnSurvival}
+mafSurvival(
+  maf = maf_kirc,
+  genes = "AXL",
+  time = 'time',
+  Status = 'Overall_Survival_Status',
+  isTCGA = TRUE
+)
+
+#mafSurvival(
+#  maf = maf_kirp,
+#  genes = "AXL",
+#  time = 'time',
+#  Status = 'Overall_Survival_Status',
+#  isTCGA = TRUE
+#)
+
+#mafSurvival(
+#  maf = maf_kich,
+#  genes = "AXL",
+#  time = 'time',
+#  Status = 'Overall_Survival_Status',
+#  isTCGA = TRUE
+#)
+
+
+# MET
+mafSurvival(
+  maf = maf_kirc,
+  genes = "MET",
+  time = 'time',
+  Status = 'Overall_Survival_Status',
+  isTCGA = TRUE
+)
+
+mafSurvival(
+  maf = maf_kirp,
+  genes = "MET",
+  time = 'time',
+  Status = 'Overall_Survival_Status',
+  isTCGA = TRUE
+)
+
+#mafSurvival(
+#  maf = maf_kich,
+#  genes = "MET",
+#  time = 'time',
+#  Status = 'Overall_Survival_Status',
+#  isTCGA = TRUE
+#)
+
+# SRC
+mafSurvival(
+  maf = maf_kirc,
+  genes = "SRC",
+  time = 'time',
+  Status = 'Overall_Survival_Status',
+  isTCGA = TRUE
+)
+
+#mafSurvival(
+#  maf = maf_kirp,
+#  genes = "SRC",
+#  time = 'time',
+#  Status = 'Overall_Survival_Status',
+#  isTCGA = TRUE
+#)
+
+#mafSurvival(
+#  maf = maf_kich,
+#  genes = "SRC",
+#  time = 'time',
+#  Status = 'Overall_Survival_Status',
+#  isTCGA = TRUE
+#)
+```
+
+
+let's check MET mutations in these three cancers
+```{r OncoPlot}
+oncoplot(maf = maf_kirc, genes = c('AXL', 'MET', 'SRC'))
+oncoplot(maf = maf_kirp, genes = c('AXL', 'MET', 'SRC'))
+#oncoplot(maf = maf_kich, genes = c('AXL', 'MET', 'SRC')) # not mutated
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/kirc_oncoplot.png", width = 8 * 400, height = 8 * 200, res = 300, bg = "transparent")
+print(oncoplot(maf = maf_kirc, genes = c('AXL', 'MET', 'SRC')))
+dev.off()
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/kirp_oncoplot.png", width = 8 * 400, height = 8 * 200, res = 300, bg = "transparent")
+print(oncoplot(maf = maf_kirp, genes = c('AXL', 'MET', 'SRC')))
+dev.off()
+
+png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/kirc_kirp_oncoplot.png", width = 8 * 400, height = 8 * 400, res = 300, bg = "transparent")
+print(coOncoplot(m1 = maf_kirc, m2=maf_kirp, m1Name='ccRCC', m2Name='pRCC', genes = c('AXL', 'MET', 'SRC')))
+dev.off()
+```
+
+
+```{r cobarplot}
+coBarplot(m1 = maf_kirc, m2 = maf_kirp, m1Name = "KIRC", m2Name = "KIRP", genes = c('AXL', 'MET', 'SRC'))
+```
+
+
+
