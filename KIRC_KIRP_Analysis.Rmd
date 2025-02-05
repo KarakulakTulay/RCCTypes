@@ -1,0 +1,137 @@
+---
+title: "KIRC and KIRP analysis on AXL, MET and SRC"
+output:
+  html_document:
+    df_print: paged
+---
+
+
+```{r loadLibraries}
+library(TCGAplot)
+```
+
+
+# AXL, MET and SRC expression across PanCancer
+```{r Expressions}
+gene1 <- 'AXL'
+gene2 <- 'MET'
+gene3 <- 'SRC'
+pan_boxplot(gene1,palette="jco",legend="right",method="wilcox.test")
+pan_boxplot(gene2,palette="jco",legend="right",method="wilcox.test")
+pan_boxplot(gene3,palette="jco",legend="right",method="wilcox.test")
+```
+
+
+# paired boxplot
+```{r Expressions2}
+pan_paired_boxplot(gene1,palette="jco",legend="right",method="wilcox.test")
+pan_paired_boxplot(gene2,palette="jco",legend="right",method="wilcox.test")
+pan_paired_boxplot(gene3,palette="jco",legend="right",method="wilcox.test")
+```
+
+
+```{r Expressions_ccRCC}
+gene1 <- 'AXL'
+gene2 <- 'MET'
+gene3 <- 'SRC'
+
+# AXL
+axl_kirc_exp <- paired_boxplot('KIRC',gene1, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+axl_kirp_exp <- paired_boxplot('KIRP',gene1, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+
+# MET
+met_kirc_exp <- paired_boxplot('KIRC',gene2, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+met_kirp_exp <- paired_boxplot('KIRP',gene2, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+
+# SRC
+src_kirc_exp <- paired_boxplot('KIRC',gene3, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+src_kirp_exp <- paired_boxplot('KIRP',gene3, palette="aaas",legend="none",label="p.signif",method="wilcox.test")
+
+## save Files -  AXL
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/axl_kirc_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(axl_kirc_exp)
+#dev.off()
+#
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/axl_kirp_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(axl_kirp_exp)
+#dev.off()
+#
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/axl_kich_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(axl_kich_exp)
+#dev.off()
+#
+## save Files - MET
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/met_kirc_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(met_kirc_exp)
+#dev.off()
+#
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/met_kirp_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(met_kirp_exp)
+#dev.off()
+#
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/met_kich_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(met_kich_exp)
+#dev.off()
+#
+#
+## save Files - SRC
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_kirc_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(src_kirc_exp)
+#dev.off()
+#
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_kirp_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(src_kirp_exp)
+#dev.off()
+#
+#png("/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_kich_exp.png", width = 8 * 300, #height = 8 * 300, res = 300, bg = "transparent")
+#print(src_kich_exp)
+#dev.off()
+```
+
+
+```{r StageExpression}
+cancer1 <- 'KIRC'
+cancer2 <- 'KIRP' 
+
+gene_stage(cancer1,gene1,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer1,gene2,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer1,gene3,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+
+
+gene_stage(cancer2,gene1,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer2,gene2,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+gene_stage(cancer2,gene3,add = "jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test")
+
+
+#ggsave('/Users/tulaykarakulak/Desktop/AXLPaper/Figures/TCGAPlot/src_stage.png', plot = #gene_stage(cancer1,gene3,add = #"jitter",palette="jco",legend="none",label="p.signif",method="wilcox.test"), bg = "transparent", #width = 7, height = 7)
+```
+
+maybe not so important 
+
+```{r Correlations}
+gene_gene_scatter(cancer1,gene1,gene2,density="F")
+gene_gene_scatter(cancer1,gene1,gene3,density="F")
+gene_gene_scatter(cancer1,gene2,gene3,density="F")
+
+
+gene_gene_scatter(cancer2,gene1,gene2,density="F")
+gene_gene_scatter(cancer2,gene1,gene3,density="F")
+gene_gene_scatter(cancer2,gene2,gene3,density="F")
+
+```
+
+
+# Survival Analysis
+```{r survival}
+tcga_kmplot(cancer1,gene1,palette='jco')
+tcga_kmplot(cancer1,gene2,palette='jco')
+tcga_kmplot(cancer1,gene3,palette='jco')
+
+
+tcga_kmplot(cancer2,gene1,palette='jco')
+tcga_kmplot(cancer2,gene2,palette='jco')
+tcga_kmplot(cancer2,gene3,palette='jco')
+```
+
+
+
